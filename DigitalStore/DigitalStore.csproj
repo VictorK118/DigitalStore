@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>DigitalStore</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="DigitalStore.BL\" />
+      <Folder Include="DigitalStore.DataAccess\Entities\" />
+      <Folder Include="DigitalStore.DataAccess\Migrations\" />
+      <Folder Include="DigitalStore.Repository\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="DigitalStore.Service\Pages\Error.cshtml" />
+      <AdditionalFiles Include="DigitalStore.Service\Pages\Index.cshtml" />
+      <AdditionalFiles Include="DigitalStore.Service\Pages\Privacy.cshtml" />
+      <AdditionalFiles Include="DigitalStore.Service\Pages\Shared\_Layout.cshtml" />
+      <AdditionalFiles Include="DigitalStore.Service\Pages\Shared\_ValidationScriptsPartial.cshtml" />
+      <AdditionalFiles Include="DigitalStore.Service\Pages\_ViewImports.cshtml" />
+      <AdditionalFiles Include="DigitalStore.Service\Pages\_ViewStart.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Properties\launchSettings.json" />
+      <None Include="DigitalStore.Service\Properties\launchSettings.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+      <PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
+      <PackageReference Include="Serilog.Expressions" Version="5.0.1-dev-00182" />
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+    </ItemGroup>
+
+</Project>
