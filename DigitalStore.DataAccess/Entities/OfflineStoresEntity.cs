@@ -13,5 +13,5 @@ public class OfflineStoresEntity: BaseEntity
     
     public virtual ICollection<UsersEntity> Users { get; set; }
     
-    public virtual ICollection<SmartphonesEntity> Smartphones { get; set; }
+    public virtual ICollection<SmartphonesInStoresEntity> Smartphones { get; set; }
 }

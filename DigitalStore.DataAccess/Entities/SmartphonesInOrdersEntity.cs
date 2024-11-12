@@ -8,8 +8,8 @@ public class SmartphonesInOrdersEntity: BaseEntity
     public int Amount { get; set; }
     
     public int SmartphoneId { get; set; }
-    public CitiesEntity Smartphone { get; set; }
+    public SmartphonesEntity Smartphone { get; set; }
     
     public int OrderId { get; set; }
-    public OfflineStoresEntity Order { get; set; }
+    public OrdersEntity Order { get; set; }
 }

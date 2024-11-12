@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalStore.Service", "Dig
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalStore.DataAccess", "DigitalStore.DataAccess\DigitalStore.DataAccess.csproj", "{A6C900C9-4583-4C1F-8377-03B6F9853CAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalStore.Repository", "DigitalStore.Repository\DigitalStore.Repository.csproj", "{55F8F529-6963-45DA-AD61-20D1CC473D17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{A6C900C9-4583-4C1F-8377-03B6F9853CAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6C900C9-4583-4C1F-8377-03B6F9853CAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6C900C9-4583-4C1F-8377-03B6F9853CAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55F8F529-6963-45DA-AD61-20D1CC473D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55F8F529-6963-45DA-AD61-20D1CC473D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55F8F529-6963-45DA-AD61-20D1CC473D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55F8F529-6963-45DA-AD61-20D1CC473D17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

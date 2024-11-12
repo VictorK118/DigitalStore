@@ -19,7 +19,7 @@ public class SmartphonesEntity: BaseEntity
     public int ChipId { get; set; }
     public ChipsEntity Chip { get; set; }
     
-    public virtual ICollection<OrdersEntity> Orders { get; set; }
+    public virtual ICollection<SmartphonesInOrdersEntity> Orders { get; set; }
     
-    public virtual ICollection<OfflineStoresEntity> OfflineStores { get; set; }
+    public virtual ICollection<SmartphonesInStoresEntity> Stores { get; set; }
 }

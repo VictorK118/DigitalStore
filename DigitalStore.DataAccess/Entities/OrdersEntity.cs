@@ -11,6 +11,6 @@ public class OrdersEntity: BaseEntity
 
     public int UserId { get; set; }
     public UsersEntity User { get; set; }
-    
-    public virtual ICollection<SmartphonesEntity> Smartphones { get; set; }
+
+    public virtual ICollection<SmartphonesInOrdersEntity> Smartphones { get; set; }
 }
