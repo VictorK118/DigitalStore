@@ -3,7 +3,7 @@
 namespace DigitalStore.DataAccess.Entities;
 
 [Table("Orders")]
-public class OrdersEntity: BaseEntity
+public class OrdersEntity: IBaseEntity
 {
     public int OrderNum { get; set; }
     public DateTime RegistrationDate { get; set; }
@@ -13,4 +13,9 @@ public class OrdersEntity: BaseEntity
     public UsersEntity User { get; set; }
 
     public virtual ICollection<SmartphonesInOrdersEntity> Smartphones { get; set; }
+    
+    public int Id { get; set; }
+    public Guid ExternalId { get; set; }
+    public DateTime ModificationTime { get; set; }
+    public DateTime CreationTime { get; set; }
 }

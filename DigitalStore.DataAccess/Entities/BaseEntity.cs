@@ -2,7 +2,7 @@
 
 namespace DigitalStore.DataAccess.Entities;
 
-public class BaseEntity
+public interface IBaseEntity
 {
     public int Id { get; set; }
 

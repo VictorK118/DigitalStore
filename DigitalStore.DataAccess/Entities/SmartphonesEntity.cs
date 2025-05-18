@@ -3,7 +3,7 @@
 namespace DigitalStore.DataAccess.Entities;
 
 [Table("Smartphones")]
-public class SmartphonesEntity: BaseEntity
+public class SmartphonesEntity: IBaseEntity
 {
     public string Name { get; set; }
     public float MainCameraResolution { get; set; }
@@ -22,4 +22,9 @@ public class SmartphonesEntity: BaseEntity
     public virtual ICollection<SmartphonesInOrdersEntity> Orders { get; set; }
     
     public virtual ICollection<SmartphonesInStoresEntity> Stores { get; set; }
+    
+    public int Id { get; set; }
+    public Guid ExternalId { get; set; }
+    public DateTime ModificationTime { get; set; }
+    public DateTime CreationTime { get; set; }
 }

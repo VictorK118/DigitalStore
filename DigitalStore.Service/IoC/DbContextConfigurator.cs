@@ -4,7 +4,7 @@ using DigitalStore.Service.Settings;
 
 namespace DigitalStore.Service.IoC;
 
-public class DbContextConfigurator
+public static class DbContextConfigurator
 {
     public static void ConfigureService(IServiceCollection services, DigitalStoreSettings settings)
     {

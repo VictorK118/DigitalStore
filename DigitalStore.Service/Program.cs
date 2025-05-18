@@ -16,15 +16,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 SerilogConfigurator.ConfigureService(builder);
-SwaggerConfigurator.ConfigureServices(builder.Services);
 DbContextConfigurator.ConfigureService(builder.Services, settings);
+MapperConfigurator.ConfigureServices(builder.Services);
+SwaggerConfigurator.ConfigureServices(builder.Services);
 
 var app = builder.Build();
 
 SerilogConfigurator.ConfigureApplication(app);
-SwaggerConfigurator.ConfigureApplication(app);
 DbContextConfigurator.ConfigureApplication(app);
+SwaggerConfigurator.ConfigureApplication(app);
 
+app.MapControllers();
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();

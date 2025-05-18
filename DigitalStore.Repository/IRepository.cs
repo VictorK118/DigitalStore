@@ -3,10 +3,10 @@ using DigitalStore.DataAccess.Entities;
 
 namespace DigitalStore.DataAccess.Repository;
 
-public interface IRepository<T> where T: BaseEntity
+public interface IRepository<T> where T: class, IBaseEntity
 {
-    IQueryable<T> GetAll();
-    IQueryable<T> GetAll(Expression<Func<T, bool>> predicate);
+    IEnumerable<T> GetAll();
+    IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate);
     T? GetById(int id);
     T? GetById(Guid id);
     T Save(T entity);
