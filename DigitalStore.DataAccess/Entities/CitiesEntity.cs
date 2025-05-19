@@ -10,8 +10,7 @@ public class CitiesEntity: IBaseEntity
     public virtual ICollection<UsersEntity> Users { get; set; }
     public virtual ICollection<OfflineStoresEntity> Stores { get; set; }
     
-    public int Id { get; set; }
-    public Guid ExternalId { get; set; }
+    public Guid Id { get; set; }
     public DateTime ModificationTime { get; set; }
     public DateTime CreationTime { get; set; }
 }

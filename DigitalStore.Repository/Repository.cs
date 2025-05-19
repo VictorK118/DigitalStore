@@ -13,56 +13,54 @@ public class Repository<T>: IRepository<T> where T: class, IBaseEntity
     public Repository(IDbContextFactory<DigitalStoreDbContext> contextFactory) 
         => _contextFactory = contextFactory;
 
-    public IEnumerable<T> GetAll()
+    public async Task<IEnumerable<T>> GetAllAsync()
     {
-        using var dbContext = _contextFactory.CreateDbContext();
-        return dbContext.Set<T>().AsNoTracking().ToList();
+        using var dbContext = await _contextFactory.CreateDbContextAsync();
+        return dbContext.Set<T>().AsNoTracking()
+            .ToList();
     }
 
-    public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate)
+    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
     {
-        using var dbContext = _contextFactory.CreateDbContext();
-        return dbContext.Set<T>().AsNoTracking().Where(predicate).ToList();
+        using var dbContext = await _contextFactory.CreateDbContextAsync();
+        return dbContext.Set<T>().AsNoTracking()
+            .Where(predicate)
+            .ToList();
     }
 
-    public T? GetById(int id)
+    public async Task<T?> GetByIdAsync(Guid id)
     {
-        using var dbContext = _contextFactory.CreateDbContext();
-        return dbContext.Set<T>().AsNoTracking().FirstOrDefault(x => x.Id == id);
+        using var dbContext = await _contextFactory.CreateDbContextAsync();
+        return await dbContext.Set<T>().AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public T? GetById(Guid id)
+    public async Task<T> SaveAsync(T entity)
     {
-        using var dbContext = _contextFactory.CreateDbContext();
-        return dbContext.Set<T>().FirstOrDefault(x => x.ExternalId == id);
-    }
-
-    public T Save(T entity)
-    {
-        using var dbContext = _contextFactory.CreateDbContext();
-        if (dbContext.Set<T>().Any(x => x.Id == entity.Id))
+        using var dbContext = await _contextFactory.CreateDbContextAsync();
+        if (await dbContext.Set<T>().AsNoTracking().AnyAsync(x => x.Id == entity.Id))
         {
             entity.ModificationTime = DateTime.UtcNow;
             var result = dbContext.Set<T>().Attach(entity);
             dbContext.Entry(entity).State = EntityState.Modified;
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
             return result.Entity;
         }
         else
         {
-            entity.ExternalId = Guid.NewGuid();
+            entity.Id = Guid.NewGuid();
             entity.CreationTime = DateTime.UtcNow;
             entity.ModificationTime = entity.CreationTime;
-            var result = dbContext.Set<T>().Add(entity);
-            dbContext.SaveChanges();
+            var result = await dbContext.Set<T>().AddAsync(entity);
+            await dbContext.SaveChangesAsync();
             return result.Entity;
         }
     }
 
-    public void Delete(T entity)
+    public async Task DeleteAsync(T entity)
     {
-        using var dbContext = _contextFactory.CreateDbContext();
+        using var dbContext = await _contextFactory.CreateDbContextAsync();
         dbContext.Set<T>().Remove(entity);
-        dbContext.SaveChanges();
+        await dbContext.SaveChangesAsync();
     }
 }

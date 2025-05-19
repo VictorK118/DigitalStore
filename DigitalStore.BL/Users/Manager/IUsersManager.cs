@@ -4,7 +4,6 @@ namespace DigitalStore.BL.Users.Manager;
 
 public interface IUsersManager
 {
-    UserModel CreateUser(CreateUserModel createModel);
-    void DeleteUser(int id);
-    UserModel UpdateUser(int id, UpdateUserModel updateModel);
+    void DeleteUser(Guid id);
+    UserModel UpdateUser(Guid id, UpdateUserModel updateModel);
 }

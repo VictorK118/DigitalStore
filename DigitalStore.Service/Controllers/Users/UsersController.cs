@@ -25,7 +25,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    [Route("[users]")]
+    [Route("")]
     public IActionResult GetUsers()
     {
         try

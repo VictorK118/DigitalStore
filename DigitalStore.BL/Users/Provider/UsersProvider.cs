@@ -19,19 +19,18 @@ public class UsersProvider(IRepository<UsersEntity> userRepository, IMapper mapp
         string? city = filter?.City;
         string? store = filter?.Store;
         
-        var users = userRepository.GetAll(u =>
+        var users = userRepository.GetAllAsync(u =>
             (namePart == null || (u.UserName).Contains(namePart)) &&
             (phoneNumberPart == null || u.PhoneNumber.Contains(phoneNumberPart)) &&
             (emailPart == null || u.Email.Contains(emailPart)) &&
             (creationTime == null || u.CreationTime == creationTime) &&
             (modificationTime == null || u.ModificationTime == modificationTime));
         return mapper.Map<IEnumerable<UserModel>>(users);
-        throw new NotImplementedException();
     }
 
-    public UserModel GerUserInfo(int id)
+    public UserModel GerUserInfo(Guid id)
     {
-        var entity = userRepository.GetById(id);
+        var entity = userRepository.GetByIdAsync(id);
         if (entity == null)
             throw new UserNotFoundException("User not found");
         

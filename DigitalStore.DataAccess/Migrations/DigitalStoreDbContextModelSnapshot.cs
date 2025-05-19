@@ -24,17 +24,12 @@ namespace DigitalStore.DataAccess.Migrations
 
             modelBuilder.Entity("DigitalStore.DataAccess.Entities.BrandsEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("ExternalId")
-                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("ModificationTime")
                         .HasColumnType("timestamp with time zone");
@@ -50,11 +45,9 @@ namespace DigitalStore.DataAccess.Migrations
 
             modelBuilder.Entity("DigitalStore.DataAccess.Entities.ChipsEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("CPU")
                         .IsRequired()
@@ -62,9 +55,6 @@ namespace DigitalStore.DataAccess.Migrations
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("ExternalId")
-                        .HasColumnType("uuid");
 
                     b.Property<string>("GPU")
                         .IsRequired()
@@ -84,17 +74,12 @@ namespace DigitalStore.DataAccess.Migrations
 
             modelBuilder.Entity("DigitalStore.DataAccess.Entities.CitiesEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("ExternalId")
-                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("ModificationTime")
                         .HasColumnType("timestamp with time zone");
@@ -110,24 +95,19 @@ namespace DigitalStore.DataAccess.Migrations
 
             modelBuilder.Entity("DigitalStore.DataAccess.Entities.OfflineStoresEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("ExternalId")
-                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("ModificationTime")
                         .HasColumnType("timestamp with time zone");
@@ -145,23 +125,18 @@ namespace DigitalStore.DataAccess.Migrations
 
             modelBuilder.Entity("DigitalStore.DataAccess.Entities.OrdersEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("ExternalId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("ModificationTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("OrderNum")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("OrderNum")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("timestamp with time zone");
@@ -169,8 +144,8 @@ namespace DigitalStore.DataAccess.Migrations
                     b.Property<float>("TotalCost")
                         .HasColumnType("real");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -179,13 +154,31 @@ namespace DigitalStore.DataAccess.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("DigitalStore.DataAccess.Entities.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("user_roles", (string)null);
+                });
+
             modelBuilder.Entity("DigitalStore.DataAccess.Entities.RolesEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp with time zone");
@@ -193,9 +186,6 @@ namespace DigitalStore.DataAccess.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<Guid>("ExternalId")
-                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("ModificationTime")
                         .HasColumnType("timestamp with time zone");
@@ -211,17 +201,15 @@ namespace DigitalStore.DataAccess.Migrations
 
             modelBuilder.Entity("DigitalStore.DataAccess.Entities.SmartphonesEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("BrandId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("BrandId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ChipId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ChipId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Color")
                         .IsRequired()
@@ -232,9 +220,6 @@ namespace DigitalStore.DataAccess.Migrations
 
                     b.Property<float>("DisplaySize")
                         .HasColumnType("real");
-
-                    b.Property<Guid>("ExternalId")
-                        .HasColumnType("uuid");
 
                     b.Property<float>("MainCameraResolution")
                         .HasColumnType("real");
@@ -266,11 +251,9 @@ namespace DigitalStore.DataAccess.Migrations
 
             modelBuilder.Entity("DigitalStore.DataAccess.Entities.SmartphonesInOrdersEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Amount")
                         .HasColumnType("integer");
@@ -278,17 +261,14 @@ namespace DigitalStore.DataAccess.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("ExternalId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("ModificationTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("SmartphoneId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("SmartphoneId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -301,11 +281,9 @@ namespace DigitalStore.DataAccess.Migrations
 
             modelBuilder.Entity("DigitalStore.DataAccess.Entities.SmartphonesInStoresEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Amount")
                         .HasColumnType("integer");
@@ -313,17 +291,14 @@ namespace DigitalStore.DataAccess.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("ExternalId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("ModificationTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("SmartphoneId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("SmartphoneId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("StoreId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("StoreId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -332,29 +307,56 @@ namespace DigitalStore.DataAccess.Migrations
                     b.ToTable("SmartphonesInStores");
                 });
 
+            modelBuilder.Entity("DigitalStore.DataAccess.Entities.UserRole", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("UsersEntityId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("UsersEntityId");
+
+                    b.ToTable("UserRoles");
+                });
+
             modelBuilder.Entity("DigitalStore.DataAccess.Entities.UsersEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<DateOnly>("Birthday")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime>("Birthday")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<Guid?>("CityId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("integer");
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("ExternalId")
-                        .HasColumnType("uuid");
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ModificationTime")
                         .HasColumnType("timestamp with time zone");
@@ -363,8 +365,13 @@ namespace DigitalStore.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("text");
+
                     b.Property<string>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Patronymicname")
@@ -372,28 +379,121 @@ namespace DigitalStore.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer");
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("boolean");
 
-                    b.Property<int>("StoreId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("RolesEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("StoreId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Surname")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UserName")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RolesEntityId");
 
                     b.HasIndex("StoreId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("user_role_claims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("user_claims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.ToTable("user_logins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("user_tokens", (string)null);
                 });
 
             modelBuilder.Entity("DigitalStore.DataAccess.Entities.OfflineStoresEntity", b =>
@@ -475,29 +575,28 @@ namespace DigitalStore.DataAccess.Migrations
                     b.Navigation("Store");
                 });
 
+            modelBuilder.Entity("DigitalStore.DataAccess.Entities.UserRole", b =>
+                {
+                    b.HasOne("DigitalStore.DataAccess.Entities.UsersEntity", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("UsersEntityId");
+                });
+
             modelBuilder.Entity("DigitalStore.DataAccess.Entities.UsersEntity", b =>
                 {
                     b.HasOne("DigitalStore.DataAccess.Entities.CitiesEntity", "City")
                         .WithMany("Users")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CityId");
 
-                    b.HasOne("DigitalStore.DataAccess.Entities.RolesEntity", "Role")
+                    b.HasOne("DigitalStore.DataAccess.Entities.RolesEntity", null)
                         .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RolesEntityId");
 
                     b.HasOne("DigitalStore.DataAccess.Entities.OfflineStoresEntity", "Store")
                         .WithMany("Users")
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StoreId");
 
                     b.Navigation("City");
-
-                    b.Navigation("Role");
 
                     b.Navigation("Store");
                 });
@@ -546,6 +645,8 @@ namespace DigitalStore.DataAccess.Migrations
             modelBuilder.Entity("DigitalStore.DataAccess.Entities.UsersEntity", b =>
                 {
                     b.Navigation("Orders");
+
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

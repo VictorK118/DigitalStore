@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DigitalStore.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,10 +16,8 @@ namespace DigitalStore.DataAccess.Migrations
                 name: "Brands",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    ExternalId = table.Column<Guid>(type: "uuid", nullable: false),
                     ModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -32,12 +30,10 @@ namespace DigitalStore.DataAccess.Migrations
                 name: "Chips",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     CPU = table.Column<string>(type: "text", nullable: false),
                     GPU = table.Column<string>(type: "text", nullable: false),
-                    ExternalId = table.Column<Guid>(type: "uuid", nullable: false),
                     ModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -50,10 +46,8 @@ namespace DigitalStore.DataAccess.Migrations
                 name: "Cities",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    ExternalId = table.Column<Guid>(type: "uuid", nullable: false),
                     ModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -66,11 +60,9 @@ namespace DigitalStore.DataAccess.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
-                    ExternalId = table.Column<Guid>(type: "uuid", nullable: false),
                     ModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -80,11 +72,82 @@ namespace DigitalStore.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Smartphones",
+                name: "user_claims",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_claims", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_logins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "text", nullable: false),
+                    ProviderKey = table.Column<string>(type: "text", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_logins", x => new { x.LoginProvider, x.ProviderKey });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_role_claims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RoleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_role_claims", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_roles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    NormalizedName = table.Column<string>(type: "text", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_roles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_tokens",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    LoginProvider = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_tokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Smartphones",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     MainCameraResolution = table.Column<float>(type: "real", nullable: false),
                     DisplaySize = table.Column<float>(type: "real", nullable: false),
@@ -92,9 +155,8 @@ namespace DigitalStore.DataAccess.Migrations
                     StorageMemory = table.Column<int>(type: "integer", nullable: false),
                     Color = table.Column<string>(type: "text", nullable: false),
                     Price = table.Column<float>(type: "real", nullable: false),
-                    BrandId = table.Column<int>(type: "integer", nullable: false),
-                    ChipId = table.Column<int>(type: "integer", nullable: false),
-                    ExternalId = table.Column<Guid>(type: "uuid", nullable: false),
+                    BrandId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ChipId = table.Column<Guid>(type: "uuid", nullable: false),
                     ModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -119,12 +181,10 @@ namespace DigitalStore.DataAccess.Migrations
                 name: "OfflineStores",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: false),
-                    CityId = table.Column<int>(type: "integer", nullable: false),
-                    ExternalId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CityId = table.Column<Guid>(type: "uuid", nullable: false),
                     ModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -143,12 +203,10 @@ namespace DigitalStore.DataAccess.Migrations
                 name: "SmartphonesInStores",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Amount = table.Column<int>(type: "integer", nullable: false),
-                    SmartphoneId = table.Column<int>(type: "integer", nullable: false),
-                    StoreId = table.Column<int>(type: "integer", nullable: false),
-                    ExternalId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SmartphoneId = table.Column<Guid>(type: "uuid", nullable: false),
+                    StoreId = table.Column<Guid>(type: "uuid", nullable: false),
                     ModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -173,21 +231,30 @@ namespace DigitalStore.DataAccess.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Surname = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Patronymicname = table.Column<string>(type: "text", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "text", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: false),
-                    PasswordHash = table.Column<string>(type: "text", nullable: false),
-                    Birthday = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    RoleId = table.Column<int>(type: "integer", nullable: false),
-                    CityId = table.Column<int>(type: "integer", nullable: false),
-                    StoreId = table.Column<int>(type: "integer", nullable: false),
-                    ExternalId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Birthday = table.Column<DateOnly>(type: "date", nullable: false),
+                    CityId = table.Column<Guid>(type: "uuid", nullable: true),
+                    StoreId = table.Column<Guid>(type: "uuid", nullable: true),
                     ModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RolesEntityId = table.Column<Guid>(type: "uuid", nullable: true),
+                    UserName = table.Column<string>(type: "text", nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "text", nullable: true),
+                    Email = table.Column<string>(type: "text", nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "text", nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "text", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -196,33 +263,28 @@ namespace DigitalStore.DataAccess.Migrations
                         name: "FK_Users_Cities_CityId",
                         column: x => x.CityId,
                         principalTable: "Cities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Users_OfflineStores_StoreId",
                         column: x => x.StoreId,
                         principalTable: "OfflineStores",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Users_Roles_RoleId",
-                        column: x => x.RoleId,
+                        name: "FK_Users_Roles_RolesEntityId",
+                        column: x => x.RolesEntityId,
                         principalTable: "Roles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    OrderNum = table.Column<int>(type: "integer", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    OrderNum = table.Column<Guid>(type: "uuid", nullable: false),
                     RegistrationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     TotalCost = table.Column<float>(type: "real", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
-                    ExternalId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     ModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -238,15 +300,31 @@ namespace DigitalStore.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UsersEntityId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_UserRoles_Users_UsersEntityId",
+                        column: x => x.UsersEntityId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SmartphonesInOrders",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Amount = table.Column<int>(type: "integer", nullable: false),
-                    SmartphoneId = table.Column<int>(type: "integer", nullable: false),
-                    OrderId = table.Column<int>(type: "integer", nullable: false),
-                    ExternalId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SmartphoneId = table.Column<Guid>(type: "uuid", nullable: false),
+                    OrderId = table.Column<Guid>(type: "uuid", nullable: false),
                     ModificationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -303,14 +381,19 @@ namespace DigitalStore.DataAccess.Migrations
                 column: "SmartphoneId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserRoles_UsersEntityId",
+                table: "UserRoles",
+                column: "UsersEntityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_CityId",
                 table: "Users",
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleId",
+                name: "IX_Users_RolesEntityId",
                 table: "Users",
-                column: "RoleId");
+                column: "RolesEntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_StoreId",
@@ -326,6 +409,24 @@ namespace DigitalStore.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "SmartphonesInStores");
+
+            migrationBuilder.DropTable(
+                name: "user_claims");
+
+            migrationBuilder.DropTable(
+                name: "user_logins");
+
+            migrationBuilder.DropTable(
+                name: "user_role_claims");
+
+            migrationBuilder.DropTable(
+                name: "user_roles");
+
+            migrationBuilder.DropTable(
+                name: "user_tokens");
+
+            migrationBuilder.DropTable(
+                name: "UserRoles");
 
             migrationBuilder.DropTable(
                 name: "Orders");

@@ -13,18 +13,17 @@ public class SmartphonesEntity: IBaseEntity
     public string Color { get; set; }
     public float Price { get; set; }
 
-    public int BrandId { get; set; }
+    public Guid BrandId { get; set; }
     public BrandsEntity Brand { get; set; }
     
-    public int ChipId { get; set; }
+    public Guid ChipId { get; set; }
     public ChipsEntity Chip { get; set; }
     
     public virtual ICollection<SmartphonesInOrdersEntity> Orders { get; set; }
     
     public virtual ICollection<SmartphonesInStoresEntity> Stores { get; set; }
     
-    public int Id { get; set; }
-    public Guid ExternalId { get; set; }
+    public Guid Id { get; set; }
     public DateTime ModificationTime { get; set; }
     public DateTime CreationTime { get; set; }
 }

@@ -8,7 +8,12 @@ public class CitiesBLProfile: Profile
 {
     public CitiesBLProfile()
     {
-        CreateMap<CitiesEntity, CityModel>()
-            .ForMember(x => x.Id, y => y.MapFrom(src => src.Id));
+        CreateMap<CitiesEntity, CityModel>();
+
+        CreateMap<CreateCityModel, CitiesEntity>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.CreationTime, opt => opt.Ignore())
+            .ForMember(dest => dest.ModificationTime, opt => opt.Ignore());
     }
 }

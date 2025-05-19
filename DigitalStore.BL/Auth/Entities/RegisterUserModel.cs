@@ -1,18 +1,16 @@
-﻿namespace DigitalStore.BL.Users.Entity;
+﻿namespace DigitalStore.BL.Auth.Entities;
 
-public class CreateUserModel
+public class RegisterUserModel
 {
     public string PhoneNumber { get; set; }
-    public string PasswordHash { get; set; }
+    public string Password { get; set; }
     
     public string Surname { get; set; }
     public string Name { get; set; }
     public string? Patronymicname { get; set; }
     
     public string Email { get; set; }
-    public DateTime Birthday { get; set; }
-    
-    public string Role { get; set; }
+    public DateOnly Birthday { get; set; }
     
     public string City { get; set; }
     

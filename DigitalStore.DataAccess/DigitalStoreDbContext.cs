@@ -1,9 +1,20 @@
 ﻿using DigitalStore.DataAccess.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DigitalStore.DataAccess;
 
-public class DigitalStoreDbContext: DbContext
+public class DigitalStoreDbContext: IdentityDbContext<
+    UsersEntity, 
+    Role, 
+    Guid, 
+    IdentityUserClaim<Guid>, 
+    UserRole, 
+    IdentityUserLogin<Guid>, 
+    IdentityRoleClaim<Guid>, 
+    IdentityUserToken<Guid>
+>
 {
     public DbSet<UsersEntity> Users { get; set; }
     public DbSet<SmartphonesEntity> Smartphones { get; set; }
@@ -31,12 +42,28 @@ public class DigitalStoreDbContext: DbContext
             .HasOne(x => x.City)
             .WithMany(x => x.Users)
             .HasForeignKey(x => x.CityId);
-        
-        modelBuilder.Entity<RolesEntity>().HasKey(x => x.Id);
+        modelBuilder.Entity<Role>().ToTable("user_roles");
+        modelBuilder.Entity<UserRole>().HasKey(ur => new { ur.UserId, ur.RoleId });
+        modelBuilder.Entity<IdentityUserToken<Guid>>()
+            .ToTable("user_tokens")
+            .HasKey(t => new { t.UserId, t.LoginProvider, t.Name });
+
+        modelBuilder.Entity<IdentityUserLogin<Guid>>()
+            .ToTable("user_logins")
+            .HasKey(l => new { l.LoginProvider, l.ProviderKey });
+
+        modelBuilder.Entity<IdentityUserClaim<Guid>>()
+            .ToTable("user_claims")
+            .HasKey(c => c.Id);
+
+        modelBuilder.Entity<IdentityRoleClaim<Guid>>()
+            .ToTable("user_role_claims")
+            .HasKey(c => c.Id);
+        /*modelBuilder.Entity<RolesEntity>().HasKey(x => x.Id);
         modelBuilder.Entity<UsersEntity>()
             .HasOne(x => x.Role)
             .WithMany(x => x.Users)
-            .HasForeignKey(x => x.RoleId);
+            .HasForeignKey(x => x.RoleId);*/
         
         modelBuilder.Entity<OfflineStoresEntity>().HasKey(x => x.Id);
         modelBuilder.Entity<OfflineStoresEntity>()

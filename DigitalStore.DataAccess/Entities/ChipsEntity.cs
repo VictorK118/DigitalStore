@@ -11,8 +11,7 @@ public class ChipsEntity: IBaseEntity
     
     public virtual ICollection<SmartphonesEntity> Smartphones { get; set; }
     
-    public int Id { get; set; }
-    public Guid ExternalId { get; set; }
+    public Guid Id { get; set; }
     public DateTime ModificationTime { get; set; }
     public DateTime CreationTime { get; set; }
 }
